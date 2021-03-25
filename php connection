@@ -1,0 +1,22 @@
+<?php
+	$FirstName = $_POST['first Name'];
+	$LastName = $_POST['Last Name'];
+	$Gender = $_POST['Gender'];
+	$Email = $_POST['Email'];
+	$Password = $_POST['Password'];
+	$PhoneNumber = $_POST['Phone Number'];
+
+	// Database connection
+	$conn = new mysqli('$localhost:81','root','','test');
+	if($conn->connect_error){
+		echo "$conn->connect_error";
+		die("Connection Failed : ". $conn->connect_error);
+	} else {
+		$stmt = $conn->prepare("insert into registration data(First Name,Last Name,Gender, Email, Password, Phone Number) values(?, ?, ?, ?, ?, ?)");
+		$stmt->bind_param("sssssi", $FisrtName, $LastName,$Gender, $Email, $Password, $PhoneNumber);
+	   $stmt->execute();
+		echo "Registration successfully...";
+		$stmt->close();
+		$conn->close();
+	}
+?>
